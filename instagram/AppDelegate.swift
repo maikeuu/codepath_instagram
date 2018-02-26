@@ -27,6 +27,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 configuration.server = "https://blooming-retreat-31321.herokuapp.com/parse"
             })
         )
+        if PFUser.current() != nil {
+            print("User is logged in")
+            let homeScreen = UIStoryboard(name: "Main", bundle: nil)
+            window?.rootViewController = homeScreen.instantiateViewController(withIdentifier: "HomeScreen")
+        } else {
+            print("User is not logged in")
+            let loginScreen = UIStoryboard(name: "Main", bundle: nil)
+            window?.rootViewController = loginScreen.instantiateViewController(withIdentifier: "LoginScreen")
+        }
         return true
     }
 
