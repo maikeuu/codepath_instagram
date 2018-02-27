@@ -18,6 +18,7 @@
 		C49895662043DE1800225B6B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49895652043DE1800225B6B /* Post.swift */; };
 		C498956C2043E8DD00225B6B /* PostsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C498956B2043E8DD00225B6B /* PostsTableViewCell.swift */; };
 		C49895712043EE8E00225B6B /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49895702043EE8E00225B6B /* HomeController.swift */; };
+		C4C957D62044E0AA00C319A8 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C957D52044E0AA00C319A8 /* DetailViewController.swift */; };
 		C4DE94B3203CFB58002D996E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4DE94B2203CFB58002D996E /* LoginViewController.swift */; };
 		CF6B4B90A8255A5DC36DEC2A /* Pods_instagramTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7526E8215E1E67D05E1FF051 /* Pods_instagramTests.framework */; };
 		D2318CD4F4B0FB570AB94642 /* Pods_instagramUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E43F3A1CF97C7448EE731F0 /* Pods_instagramUITests.framework */; };
@@ -63,6 +64,7 @@
 		C49895652043DE1800225B6B /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		C498956B2043E8DD00225B6B /* PostsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsTableViewCell.swift; sourceTree = "<group>"; };
 		C49895702043EE8E00225B6B /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		C4C957D52044E0AA00C319A8 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		C4DE94B2203CFB58002D996E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E8CFA48D84BC4E15457B5A78 /* Pods-instagram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-instagram.release.xcconfig"; path = "Pods/Target Support Files/Pods-instagram/Pods-instagram.release.xcconfig"; sourceTree = "<group>"; };
 		F4A28AD260AF1CB289446A0A /* Pods-instagramTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-instagramTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-instagramTests/Pods-instagramTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -165,9 +167,10 @@
 		C46449E52043BDA600B0DCEB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C49895702043EE8E00225B6B /* HomeController.swift */,
 				C4DE94B2203CFB58002D996E /* LoginViewController.swift */,
+				C49895702043EE8E00225B6B /* HomeController.swift */,
 				C49895632043D53B00225B6B /* ComposeViewController.swift */,
+				C4C957D52044E0AA00C319A8 /* DetailViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -447,12 +450,14 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-instagram/Pods-instagram-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/Parse/Parse.framework",
 				"${BUILT_PRODUCTS_DIR}/ParseUI/ParseUI.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Parse.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ParseUI.framework",
 			);
@@ -504,6 +509,7 @@
 				C418EFDA203CB968004D2712 /* AppDelegate.swift in Sources */,
 				C49895642043D53B00225B6B /* ComposeViewController.swift in Sources */,
 				C49895662043DE1800225B6B /* Post.swift in Sources */,
+				C4C957D62044E0AA00C319A8 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

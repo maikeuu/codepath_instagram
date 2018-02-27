@@ -11,7 +11,8 @@ import Parse
 
 class HomeController: UITableViewController {
 
-    var posts: [PFObject] = []
+    var posts: [Post] = []
+    var postIndex: Int?
     
     @IBOutlet weak var logoutButton: UIBarButtonItem!
     
@@ -23,8 +24,20 @@ class HomeController: UITableViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
+        self.tableView.insertSubview(refreshControl, at: 0)
+        
+        //MARK: For section header
+        self.tableView.sectionHeaderHeight = 60
+        
     }
-
+    
+    @objc func refreshControlAction(_ refreshControl: UIRefreshControl) {
+        fetchPosts()
+        refreshControl.endRefreshing()
+    }
+    
 
     func fetchPosts() {
         let query = Post.query()!
@@ -35,25 +48,13 @@ class HomeController: UITableViewController {
         //fetch data asynchronously
         query.findObjectsInBackground(block: {(posts: [PFObject]?, error: Error?) -> Void in
             if let posts = posts {
-                self.posts = posts
-                print(posts.count)
+                self.posts = posts as! [Post]
                 self.tableView.reloadData()
-            } else {
+                self.refreshControl?.endRefreshing()
+            } else { 
                 print("Data could not be fetched")
             }
         })
-        
-    }
-
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return posts.count
     }
     
     @IBAction func logOut(_ sender: Any) {
@@ -66,64 +67,72 @@ class HomeController: UITableViewController {
                 self.present(loginScreen.instantiateViewController(withIdentifier: "LoginScreen"), animated: false, completion: nil)
             }
         })
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        postIndex = indexPath.row
+        self.performSegue(withIdentifier: "DetailViewSegue", sender: self)
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return posts.count
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 60))
+        let margins = headerView.layoutMarginsGuide
         
+        let label = UILabel()
+        let imageView = UIImageView()
+        
+        headerView.addSubview(label)
+        headerView.addSubview(imageView)
+        
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 2).isActive = true
+        imageView.topAnchor.constraint(equalTo: margins.topAnchor, constant: 2).isActive = true
+//        imageView.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -2).isActive = true
+//        imageView.trailingAnchor.constraint(equalTo: label.leadingAnchor, constant: 0).isActive = true
+        imageView.widthAnchor.constraint(equalToConstant: 45).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        imageView.image = #imageLiteral(resourceName: "twitter profile pic")
+//        imageView.backgroundColor = UIColor.blue
+        
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Maikeuu"
+        label.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 8).isActive = true
+        label.topAnchor.constraint(equalTo: margins.topAnchor, constant: 0).isActive = true
+        label.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: 0).isActive = true
+        label.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: 0).isActive = true
+        return headerView
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //create a header for every post
+        return 1
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostsTableViewCell
-        let post: Post = posts[indexPath.row] as! Post
-        cell.userNameLabel.text = post.author.username
-        cell.postImage.file = post.picture as? PFFile
+        let post: Post = posts[indexPath.section]
+        cell.usernameLabel.text = "Maikeuu"
+        cell.usernameLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        cell.postImage.file = post.picture
         cell.postImage.loadInBackground()
         cell.captionLabel.text = post.caption
         return cell
     }
  
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "DetailViewSegue" {
+            let destination = segue.destination as! DetailViewController
+            let post = posts[postIndex!]
+            destination.post = post
+        }
     }
-    */
-
 }

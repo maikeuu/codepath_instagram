@@ -12,7 +12,7 @@ import Parse
 
 class PostsTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var postImage: PFImageView!
     @IBOutlet weak var captionLabel: UILabel!
     
@@ -22,6 +22,7 @@ class PostsTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+        
     }
 
 }
